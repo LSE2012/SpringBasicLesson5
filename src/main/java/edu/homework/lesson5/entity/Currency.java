@@ -1,9 +1,7 @@
-package edu.homework.lesson4.entity;
+package edu.homework.lesson5.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Entity

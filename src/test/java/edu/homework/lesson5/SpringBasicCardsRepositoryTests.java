@@ -1,9 +1,9 @@
-package edu.homework.lesson4;
+package edu.homework.lesson5;
 
-import edu.homework.lesson4.entity.Cards;
-import edu.homework.lesson4.repository.CardsCrudRepository;
-import edu.homework.lesson4.repository.CardsRepository;
-import edu.homework.lesson4.services.CardsService;
+import edu.homework.lesson5.entity.Cards;
+import edu.homework.lesson5.repository.CardsCrudRepository;
+import edu.homework.lesson5.repository.CardsRepository;
+import edu.homework.lesson5.services.CardsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

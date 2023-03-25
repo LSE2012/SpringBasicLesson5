@@ -1,6 +1,6 @@
-package edu.homework.lesson4.repository;
+package edu.homework.lesson5.repository;
 
-import edu.homework.lesson4.entity.Users;
+import edu.homework.lesson5.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

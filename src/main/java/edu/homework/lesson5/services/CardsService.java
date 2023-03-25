@@ -1,7 +1,7 @@
-package edu.homework.lesson4.services;
+package edu.homework.lesson5.services;
 
-import edu.homework.lesson4.entity.Cards;
-import edu.homework.lesson4.repository.CardsRepository;
+import edu.homework.lesson5.entity.Cards;
+import edu.homework.lesson5.repository.CardsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

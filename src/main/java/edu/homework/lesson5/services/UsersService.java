@@ -1,7 +1,7 @@
-package edu.homework.lesson4.services;
+package edu.homework.lesson5.services;
 
-import edu.homework.lesson4.entity.Users;
-import edu.homework.lesson4.repository.UsersRepository;
+import edu.homework.lesson5.entity.Users;
+import edu.homework.lesson5.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

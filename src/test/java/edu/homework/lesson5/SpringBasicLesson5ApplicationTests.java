@@ -1,9 +1,9 @@
-package edu.homework.lesson4;
+package edu.homework.lesson5;
 
-import edu.homework.lesson4.entity.Users;
-import edu.homework.lesson4.repository.UsersCrudRepository;
-import edu.homework.lesson4.repository.UsersRepository;
-import edu.homework.lesson4.services.UsersService;
+import edu.homework.lesson5.entity.Users;
+import edu.homework.lesson5.repository.UsersCrudRepository;
+import edu.homework.lesson5.repository.UsersRepository;
+import edu.homework.lesson5.services.UsersService;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
