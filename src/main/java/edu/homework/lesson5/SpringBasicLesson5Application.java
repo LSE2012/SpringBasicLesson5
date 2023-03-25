@@ -1,4 +1,4 @@
-package edu.homework.lesson4;
+package edu.homework.lesson5;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
