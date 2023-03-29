@@ -5,9 +5,12 @@ import edu.homework.lesson5.repository.UsersCrudRepository;
 import edu.homework.lesson5.repository.UsersRepository;
 import edu.homework.lesson5.services.UsersService;
 import net.bytebuddy.utility.RandomString;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 
@@ -23,89 +26,110 @@ class SpringBasicLesson5ApplicationTests {
     @Autowired
     private UsersService usersService;
 
+
     @Test
-    void testUsersById() {
+    public void testUsersById() {
+        System.out.println("====== testUsersById ========");
         var userID = 2;
         var users = usersRepository.findUsersById(userID);
-        System.out.println("====== testUsersById ========");
         users.forEach(System.out::println);
-
+        Assert.assertTrue(users.get(0).getId().equals(userID));
     }
 
     @Test
-    void testUserByName() {
+    public void testUserByName() {
+        System.out.println("====== testUserByName ========");
         var userName = "Tester1";
         var users = usersRepository.findUsersByNameIs(userName);
-        System.out.println("====== testUserByName ========");
         users.forEach(System.out::println);
+        Assert.assertTrue(users.get(0).getName().contains(userName));
     }
 
     @Test
     void testGetUserByEmail() {
+        System.out.println("====== testGetUserByEmail ========");
         var userEmail = "tester1.tester@gmail.com";
         var users = usersRepository.findUsersByEmailIs(userEmail);
-        System.out.println("====== testGetUserByEmail ========");
         users.forEach(System.out::println);
+        Assert.assertTrue(users.get(0).getEmail().equals(userEmail));
     }
 
     @Test
     void testUsersServicesFindAll() {
+        System.out.println("====== testUsersServicesFindAl ========");
+        var countUsersRepository = usersRepository.selectAllUsers().size();
         List<Users> usersList;
         usersList = new UsersService(usersRepository).findAll();
-        System.out.println("====== testUsersServicesFindAl ========");
         usersList.forEach(System.out::println);
+        Assert.assertEquals(usersList.size(),countUsersRepository);
     }
 
     @Test
-    void testUSerServicesSave() {
+    void testUserServicesSave() {
         Users user = new Users();
-        user.setName("TesterName_" + RandomString.make(5));
-        user.setEmail(RandomString.make(8) + "@ukr.ua");
+        String newUserName = "TesterName_" + RandomString.make(5);
+        String newUserEmail = RandomString.make(8) + "@ukr.ua";
+        user.setName(newUserName);
+        user.setEmail(newUserEmail);
+        System.out.println("create new User= " + user.toString());
         usersService.save(user);
+        var savedUser = usersRepository.getByEmailContains(newUserEmail);
+        savedUser.forEach(System.out::println);
+        Assert.assertEquals(savedUser.get(0).getName(),newUserName);
+        Assert.assertEquals(savedUser.get(0).getEmail(),newUserEmail);
     }
 
     @Test
     void testUsersRepository() {
+        String partEmail = "@gmail";
         List<Users> userList;
-        userList = usersRepository.getByEmailContains("@gmail");
-        userList.forEach(System.out::println);
+        userList = usersRepository.getByEmailContains(partEmail);
+        userList.forEach((c) -> System.out.println(c));
+        org.assertj.core.api.Assertions.assertThat(userList).filteredOn(c  -> c.getEmail().contains(partEmail)).isNotEmpty() ;
     }
 
     @Test
     public void testUsersRepositoryGetEmail() {
+        String userName = "Tester";
         List<Users> userList;
-        userList = usersRepository.searchByNameContains("Tester");
+        userList = usersRepository.searchByNameContains(userName);
         userList.forEach(System.out::println);
+        org.assertj.core.api.Assertions.assertThat(userList).filteredOn(c-> c.getName().contains(userName)).isNotEmpty();
     }
 
     @Test
     public void testUsersRepositoryQuerySelect() {
-        List<Users> userList = usersRepository.selectAllUsers();
-        userList.forEach(System.out::println);
+        List<Users> usersListService = usersService.findAll();
+        List<Users> userListTest = usersRepository.selectAllUsers();
+        userListTest.forEach(System.out::println);
+        Assert.assertEquals(userListTest, usersListService);
     }
 
     @Test
     public void testUsersRepositoryQuerySelectParam() {
-        Users users = usersRepository.selectUserById(1);
+        Integer userID = 1 ;
+        Users users = usersRepository.selectUserById(userID);
         System.out.println("users1 == " + users.toString());
+        Assert.assertTrue(users.getId().equals(userID));
     }
 
     @Test
     public void testUsersRepositoryQueryUpdateById() {
         int userID = usersCrudRepository.getMaxUserID();
-        Users user1 = usersRepository.selectUserById(userID);
-        System.out.println("before USER (id= " + userID + ")= " + user1.toString());
+        Users userBeforeUpdate = usersRepository.selectUserById(userID);
+        System.out.println("before USER (id= " + userID + ")= " + userBeforeUpdate.toString());
         usersRepository.updateUserByID(userID, RandomString.make(8) + "@ukr.ua");
-        Users user2 = usersRepository.selectUserById(userID);
-        System.out.println("after USER (id= " + userID + ")= " + user2.toString());
+        Users userAfterUpdate = usersRepository.selectUserById(userID);
+        System.out.println("after USER (id= " + userID + ")= " + userAfterUpdate.toString());
+        Assert.assertNotEquals(userBeforeUpdate,userAfterUpdate);
     }
 
-    @Test
-    public void testUsersRepositoryQueryDeleteByID() {
-        int maxUserID = usersCrudRepository.getMaxUserID();
-        System.out.println("Before Max userID= " + maxUserID);
-        usersRepository.deleteUserRecordByID(maxUserID);
-        System.out.println("After Max userID= " + usersCrudRepository.getMaxUserID());
-
+    @Test()
+    // Task4
+    public void testUsersRepositorySaveException() {
+        Users users = new Users();
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            usersRepository.save(users);;
+        });
     }
 }

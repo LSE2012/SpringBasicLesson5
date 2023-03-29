@@ -1,7 +1,6 @@
 package edu.homework.lesson5;
 
 import edu.homework.lesson5.entity.Cards;
-import edu.homework.lesson5.repository.CardsCrudRepository;
 import edu.homework.lesson5.repository.CardsRepository;
 import edu.homework.lesson5.services.CardsService;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,6 @@ public class SpringBasicCardsRepositoryTests {
     @Autowired
     private CardsRepository cardsRepository;
 
-    @Autowired
-    private CardsCrudRepository cardsCrudRepository;
 
     @Autowired
     private CardsService cardsService;
@@ -38,7 +35,7 @@ public class SpringBasicCardsRepositoryTests {
     @Test
     public void testCardSaveRepository() {
         Cards card = new Cards();
-        card.setNumber(123654);
+        card.setNumber("123654");
         card.setCurrencycode(980);
         card.setUserid(2);
         cardsRepository.save(card);
@@ -51,12 +48,7 @@ public class SpringBasicCardsRepositoryTests {
     }
 
 
-    @Test
-    public void testCardsCrudRepository() {
-        var cardID = 2;
-        var card = cardsCrudRepository.findById(cardID).orElse(null);
-        System.out.println(card.toString());
-    }
+
 
     @Test
     public void testCardServicesFindAll() {
@@ -76,7 +68,7 @@ public class SpringBasicCardsRepositoryTests {
     @Test
     public void testCardServicesSave() {
         Cards cards = new Cards();
-        cards.setNumber(789654123);
+        cards.setNumber("789654123");
         cards.setCurrencycode(840);
         cards.setUserid(3);
         cardsService.save(cards);
@@ -88,7 +80,7 @@ public class SpringBasicCardsRepositoryTests {
     public void testCardServiceUpdate() {
         var cards = new Cards();
         var cardId = 2;
-        cards.setNumber(123409871);
+        cards.setNumber("123409871");
         cards.setCurrencycode(840);
         cards.setUserid(cardId);
         cardsService.update(2, cards);
@@ -114,7 +106,7 @@ public class SpringBasicCardsRepositoryTests {
 
     @Test
     public void testCardRepositoryDeleteCardByNumber() {
-        int cardNumber = 77777;
+        String cardNumber = "77777";
         var cards = new Cards();
         Cards cards2;
         cards.setNumber(cardNumber);

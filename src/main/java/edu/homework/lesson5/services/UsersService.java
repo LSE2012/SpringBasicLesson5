@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @Transactional (readOnly = true)
 public class UsersService {
-
+    @Autowired
     private final UsersRepository usersRepository;
 
     @Autowired

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface CardsRepository extends JpaRepository<Cards,Integer> {
     List<Cards> findAllByCardId(int cardId);
-    List<Cards> findAllByNumberIs(int number);
-    Cards getDistinctFirstByNumberIs(int cardId);
+    List<Cards> findAllByNumberIs(String number);
+    Cards getDistinctFirstByNumberIs(String number);
 }

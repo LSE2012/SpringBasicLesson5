@@ -1,6 +1,8 @@
 package edu.homework.lesson5.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -20,6 +22,10 @@ public class Users {
     private String name;
 
     @Column
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
+            +"[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+            +"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+            message="{invalid.email}")
     private String email;
 
     public Integer getId() {
